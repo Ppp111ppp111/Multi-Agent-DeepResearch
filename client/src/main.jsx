@@ -8,7 +8,7 @@ import "./styles.css";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <CopilotKit
-      runtimeUrl={import.meta.env.VITE_RUNTIME_URL || "/api/copilotkit"}
+      runtimeUrl={import.meta.env.VITE_API_URL || "/api/copilotkit"}
       agent="research_assistant"
       useSingleEndpoint={true}
     >
