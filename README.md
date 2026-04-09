@@ -26,3 +26,41 @@ Run `npm run build`
 - The app keeps the split layout, workspace panel, research plan updates, source tracking, and file output flow from the original demo.
 - The client proxies `/api/*` to the Express server during local development.
 - The agent now uses NVIDIA's OpenAI-compatible chat API via `https://integrate.api.nvidia.com/v1` while keeping the LangChain client layer unchanged.
+
+## Application Architecture
+
+Modeled after a Hub-and-Spoke Agent pattern, the architecture consists of a central "Agent Core" that leverages different subsets of capabilities and dispatches tasks to specialized sub-agents.
+
+```mermaid
+graph TD
+    %% Base Styles
+    classDef cap fill:#fff,stroke:#e2e8f0,stroke-width:2px
+    classDef subagent fill:#6f42c1,color:#fff,stroke:#59359a,stroke-width:2px,rx:10px,ry:10px
+
+    User((👤 User)) -->|Input| Core
+
+    subgraph Core [Agent Core]
+        direction LR
+        Orchestrator((🤖<br>Orchestrator))
+        
+        subgraph Capabilities
+            L[🧠 LLM: NVIDIA Llama]:::cap
+            M[💾 Memory: Transcript]:::cap
+            P[📋 Planning Logic]:::cap
+            T[🛠️ Tools: Tavily, FS]:::cap
+        end
+        
+        Orchestrator <--> Capabilities
+    end
+
+    %% Fanning out to sub-agents
+    Core --> Planner
+    Core --> Search
+    Core --> Reporter
+    Core --> Responder
+
+    Planner[📋 Planner<br><br>Agent]:::subagent
+    Search[🌐 Online Search<br><br>Agent]:::subagent
+    Reporter[📝 Report Analysis<br><br>Agent]:::subagent
+    Responder[💬 Chat Dialogue<br><br>Agent]:::subagent
+```
