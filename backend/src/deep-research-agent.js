@@ -10,9 +10,9 @@ import { createResearchTool, contentToText } from "./tools.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..", "..");
-const reportDir = path.resolve(rootDir, "reports");
+const reportDir = path.resolve(rootDir, "backend", "reports");
 const reportDiskPath = path.join(reportDir, "final_report.md");
-const reportAppPath = "/reports/final_report.md";
+const reportAppPath = "/backend/reports/final_report.md";
 
 const PLAN_SYSTEM_PROMPT = [
   "You are a research planner.",
@@ -31,7 +31,7 @@ const REPORT_SYSTEM_PROMPT = [
 const RESPONSE_SYSTEM_PROMPT = [
   "You are a helpful research assistant.",
   "Write a concise answer to the user in 2 short paragraphs.",
-  "Summarize the most important findings and mention that the full report was saved to /reports/final_report.md.",
+  "Summarize the most important findings and mention that the full report was saved to /backend/reports/final_report.md.",
   "Do not use bullet points, JSON, or code blocks.",
 ].join(" ");
 

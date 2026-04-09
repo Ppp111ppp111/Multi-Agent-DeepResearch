@@ -41,7 +41,7 @@ pnpm-debug.log*
 *.sw?
 
 # Vite specific
-client/dist/
+frontend/dist/
 
 # Coverage
 coverage/

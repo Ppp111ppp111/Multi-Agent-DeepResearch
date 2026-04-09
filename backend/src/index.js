@@ -9,12 +9,12 @@ import { createResearchAgent } from "./deep-research-agent.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..", "..");
-const clientDistDir = path.resolve(rootDir, "client", "dist");
+const frontendDistDir = path.resolve(rootDir, "frontend", "dist");
 const rootEnvPath = path.resolve(rootDir, ".env");
-const serverEnvPath = path.resolve(__dirname, "..", ".env");
+const backendEnvPath = path.resolve(__dirname, "..", ".env");
 
 dotenv.config({ path: rootEnvPath });
-dotenv.config({ path: serverEnvPath, override: true });
+dotenv.config({ path: backendEnvPath, override: true });
 
 const app = express();
 const port = Number(process.env.PORT || 3001);
@@ -48,7 +48,7 @@ const copilotHandler = copilotRuntimeNodeExpressEndpoint({
 
 app.use("/api/copilotkit", copilotHandler);
 
-app.use(express.static(clientDistDir));
+app.use(express.static(frontendDistDir));
 
 app.use((req, res, next) => {
   if (req.path.startsWith("/api/")) {
@@ -56,7 +56,7 @@ app.use((req, res, next) => {
     return;
   }
 
-  res.sendFile(path.join(clientDistDir, "index.html"));
+  res.sendFile(path.join(frontendDistDir, "index.html"));
 });
 
 
@@ -89,7 +89,6 @@ function shutdown(signal) {
 
 process.on("SIGINT", () => shutdown("SIGINT"));
 process.on("SIGTERM", () => shutdown("SIGTERM"));
-
 
 
 

@@ -70,7 +70,7 @@ Deploy the Express server responsible for AI orchestration, LangChain processing
 3. **Configuration**:
     - Build Command: `npm install`
     - Start Command: `npm run start`
-    - Root Directory: `server`
+    - Root Directory: `backend`
 4. **Environment Variables**:
     - `NVIDIA_API_KEY`: (Your NVIDIA developer key)
     - `TAVILY_API_KEY`: (Your Tavily research key)
@@ -83,13 +83,13 @@ Deploy the Vite + React client.
 2. **Repository**: Point to your GitHub repo
 3. **Configuration**:
     - Framework Preset: `Vite`
-    - Root Directory: `client`
+    - Root Directory: `frontend`
 4. **Environment Variables**:
     - `VITE_API_URL`: The URL of your deployed render backend appendeed with `/api/copilotkit` (e.g. `https://your-backend.onrender.com/api/copilotkit`).
 
 ## Notes
 
 - The app keeps the split layout, workspace panel, research plan updates, source tracking, and file output flow from the original demo.
-- The client proxies `/api/*` to the Express server during local development.
+- The `frontend` app proxies `/api/*` to the Express `backend` during local development.
+- Generated research reports are stored in `backend/reports/final_report.md`.
 - The agent now uses NVIDIA's OpenAI-compatible chat API via `https://integrate.api.nvidia.com/v1` while keeping the LangChain client layer unchanged.
-
