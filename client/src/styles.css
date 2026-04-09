@@ -101,9 +101,13 @@ a {
 .chat-header {
   padding: var(--space-8);
   border-bottom: 1px solid var(--color-border-glass);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
 }
 
-.chat-header h1 {
+.chat-header-title h1 {
   margin: 0;
   font-size: 2.25rem;
   font-weight: 800;
@@ -111,10 +115,51 @@ a {
   line-height: 1.1;
 }
 
-.chat-header p {
+.chat-header-title p {
   margin: 4px 0 0;
   font-size: 0.875rem;
   color: var(--color-text-secondary);
+}
+
+.new-research-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.2);
+}
+
+.new-research-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.new-research-button:active {
+  transform: translateY(0);
+}
+
+.new-research-button span {
+  display: inline-block;
+}
+
+@media (max-width: 900px) {
+  .new-research-button span {
+    display: none;
+  }
+
+  .new-research-button {
+    padding: 8px;
+    border-radius: var(--radius-sm);
+  }
 }
 
 .chat-body {
@@ -756,6 +801,7 @@ a {
     opacity: 0;
     transform: translateY(-8px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -766,16 +812,19 @@ a {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
@@ -785,51 +834,63 @@ a {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
 @keyframes blob1 {
+
   0%,
   100% {
     transform: translate(0, 0) scale(1);
   }
+
   25% {
     transform: translate(-30px, 50px) scale(1.1);
   }
+
   50% {
     transform: translate(20px, -30px) scale(0.95);
   }
+
   75% {
     transform: translate(40px, 20px) scale(1.05);
   }
 }
 
 @keyframes blob2 {
+
   0%,
   100% {
     transform: translate(0, 0) scale(1);
   }
+
   33% {
     transform: translate(50px, -40px) scale(1.1);
   }
+
   66% {
     transform: translate(-30px, 30px) scale(0.9);
   }
 }
 
 @keyframes blob3 {
+
   0%,
   100% {
     transform: translate(-50%, -50%) scale(1);
   }
+
   25% {
     transform: translate(-45%, -55%) scale(1.15);
   }
+
   50% {
     transform: translate(-55%, -45%) scale(0.9);
   }
+
   75% {
     transform: translate(-48%, -52%) scale(1.1);
   }

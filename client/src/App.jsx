@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
-import { CopilotChat } from "@copilotkit/react-ui";
 import { useDefaultTool } from "@copilotkit/react-core";
+import { CopilotChat } from "@copilotkit/react-ui";
+import { Plus } from "lucide-react";
+import { useRef, useState } from "react";
 import { ToolCard } from "./components/ToolCard.jsx";
 import { Workspace } from "./components/Workspace.jsx";
 import { INITIAL_STATE } from "./types/research.js";
@@ -20,6 +21,13 @@ function parseMaybeJson(value) {
 export function App() {
   const [state, setState] = useState(INITIAL_STATE);
   const processedKeysRef = useRef(new Set());
+
+  const handleNewResearch = () => {
+    // Clear out UI state and reload to completely reset Copilot thread and context
+    setState(INITIAL_STATE);
+    processedKeysRef.current.clear();
+    window.location.reload();
+  };
 
   useDefaultTool({
     render: (props) => {
@@ -94,8 +102,19 @@ export function App() {
         <section className="chat-panel">
           <div className="chat-panel-inner">
             <header className="chat-header">
-              <h1 className="text-gradient">Deep Research Assistant</h1>
-              <p>Ask me to research any topic</p>
+              <div className="chat-header-title">
+                <h1 className="text-gradient">Deep Research Assistant</h1>
+                <p>Ask me to research any topic</p>
+              </div>
+              <button 
+                type="button" 
+                className="new-research-button" 
+                onClick={handleNewResearch}
+                title="Start New Research"
+              >
+                <Plus size={20} />
+                <span>New Research</span>
+              </button>
             </header>
 
             <div className="chat-body">
