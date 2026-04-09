@@ -1,9 +1,10 @@
-import { useDefaultTool } from "@copilotkit/react-core";
+import { useCopilotChat, useDefaultTool } from "@copilotkit/react-core";
 import { CopilotChat } from "@copilotkit/react-ui";
 import { Plus } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ToolCard } from "./components/ToolCard.jsx";
 import { Workspace } from "./components/Workspace.jsx";
+import { navigateToNewResearchRoute } from "./lib/research-session.js";
 import { INITIAL_STATE } from "./types/research.js";
 
 function parseMaybeJson(value) {
@@ -18,15 +19,25 @@ function parseMaybeJson(value) {
   }
 }
 
-export function App() {
+export function App({ routeKey }) {
   const [state, setState] = useState(INITIAL_STATE);
   const processedKeysRef = useRef(new Set());
+  const { isLoading, reset, stopGeneration } = useCopilotChat();
+
+  useEffect(() => {
+    document.title =
+      routeKey === "home" ? "Deep Research Assistant" : "Deep Research Assistant | New Research";
+  }, [routeKey]);
 
   const handleNewResearch = () => {
-    // Clear out UI state and reload to completely reset Copilot thread and context
+    if (isLoading) {
+      stopGeneration();
+    }
+
     setState(INITIAL_STATE);
     processedKeysRef.current.clear();
-    window.location.reload();
+    reset();
+    navigateToNewResearchRoute();
   };
 
   useDefaultTool({
@@ -103,8 +114,14 @@ export function App() {
           <div className="chat-panel-inner">
             <header className="chat-header">
               <div className="chat-header-title">
-                <h1 className="text-gradient">Deep Research Assistant</h1>
-                <p>Ask me to research any topic</p>
+                <h1 className="text-gradient">
+                  {routeKey === "home" ? "Deep Research Assistant" : "New Research"}
+                </h1>
+                <p>
+                  {routeKey === "home"
+                    ? "Ask me to research any topic"
+                    : "A fresh research workspace is ready"}
+                </p>
               </div>
               <button 
                 type="button" 
@@ -121,7 +138,7 @@ export function App() {
               <CopilotChat
                 className="copilot-chat-fill"
                 labels={{
-                  title: "Deep Research Assistant",
+                  title: routeKey === "home" ? "Deep Research Assistant" : "New Research",
                   initial: "What topic would you like me to research?",
                   placeholder: "Ask me to research any topic...",
                 }}

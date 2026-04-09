@@ -20,6 +20,7 @@
   --color-glass-subtle: rgba(255, 255, 255, 0.6);
   --color-glass-dark: rgba(255, 255, 255, 0.95);
   --color-glass-elevated: rgba(255, 255, 255, 0.95);
+  --color-workspace-bg: #a9d3c8;
   --shadow-glass: 0 4px 30px rgba(0, 0, 0, 0.1);
   --radius-sm: 6px;
   --radius-md: 8px;
@@ -183,8 +184,7 @@ a {
   height: 100%;
   overflow-y: auto;
   padding: 24px;
-  background: var(--color-glass-dark);
-  backdrop-filter: blur(16px);
+  background: linear-gradient(180deg, #b2dbd1 0%, var(--color-workspace-bg) 100%);
 }
 
 .workspace-header {
