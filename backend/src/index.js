@@ -21,7 +21,7 @@ const port = Number(process.env.PORT || 3001);
 
 app.use(
   cors({
-    origin: true,
+    origin: process.env.FRONTEND_URL ? [process.env.FRONTEND_URL, "http://localhost:5173", "http://127.0.0.1:5173"] : true,
     credentials: true,
   }),
 );
@@ -51,12 +51,17 @@ app.use("/api/copilotkit", copilotHandler);
 app.use(express.static(frontendDistDir));
 
 app.use((req, res, next) => {
-  if (req.path.startsWith("/api/")) {
+  if (req.path.startsWith("/api/") || (process.env.NODE_ENV === "production" && !process.env.SERVE_FRONTEND)) {
     next();
     return;
   }
 
-  res.sendFile(path.join(frontendDistDir, "index.html"));
+  const indexPath = path.join(frontendDistDir, "index.html");
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      res.status(404).send("Frontend build not found. Please build the frontend first or deploy it separately.");
+    }
+  });
 });
 
 
@@ -89,9 +94,6 @@ function shutdown(signal) {
 
 process.on("SIGINT", () => shutdown("SIGINT"));
 process.on("SIGTERM", () => shutdown("SIGTERM"));
-
-
-
 
 
 

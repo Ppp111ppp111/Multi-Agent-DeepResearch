@@ -46,3 +46,10 @@ frontend/dist/
 # Coverage
 coverage/
 .nyc_output/
+
+# Generated research reports (runtime artifacts)
+backend/reports/*.md
+
+# Runtime pid/log files
+*.pid
+backend/backend.log
