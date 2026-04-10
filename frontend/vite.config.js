@@ -17,4 +17,17 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    chunkSizeWarningLimit: 3000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-react": ["react", "react-dom"],
+          "vendor-copilot": ["@copilotkit/react-core", "@copilotkit/react-ui"],
+          "vendor-markdown": ["react-markdown"],
+          "vendor-icons": ["lucide-react"],
+        },
+      },
+    },
+  },
 });
